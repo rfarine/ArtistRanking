@@ -6192,3 +6192,50 @@ button.toast-close-button {
   #toast-container > div {
     padding: 15px 15px 15px 50px;
     width: 25em; } }
+
+/*
+ * Bootstrap overrides.
+ */
+html {
+  position: relative;
+  min-height: 100%; }
+
+body {
+  margin-bottom: 220px;
+  -webkit-font-smoothing: antialiased; }
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: #fff;
+  background-color: #3b3f51; }
+
+footer a {
+  color: #fff;
+  text-decoration: underline; }
+  footer a:hover,
+  footer a:focus {
+    color: #fff;
+    text-decoration: none; }
+
+footer .thumb-md {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  -webkit-transition: border 0.1s linear;
+          transition: border 0.1s linear; }
+  footer .thumb-md:hover {
+    border-color: rgba(255, 255, 255, 0.3); }
+
+.badge-danger {
+  color: #fff;
+  background-color: #f05150; }
+
+.badge-up {
+  position: relative;
+  top: -10px;
+  padding: 2px 5px; }
+
+.input-group-btn:last-child > .btn,
+.input-group-btn:last-child > .btn-group {
+  margin-left: 0;
+  border-left: 0; }
