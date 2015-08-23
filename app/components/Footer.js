@@ -12,7 +12,7 @@ class Footer extends React.Component {
 
   componentDidMount() {
     FooterStore.listen(this.onChange);
-    FooterActions.getTopRecipes();
+    FooterActions.getTopArtists();
   }
 
   componentWillUnmount() {
@@ -24,11 +24,11 @@ class Footer extends React.Component {
   }
 
   render() {
-    let leaderboardRecipes = this.state.recipes.map((recipe) => {
+    let leaderboardArtists = this.state.artists.map((artist) => {
       return (
-        <li key={recipe.recipeId}>
-          <Link to={'/recipes/' + recipe.recipeId}>
-            <img className='thumb-md' src={'/public/img/' + recipe.recipeId + '.png'} />
+        <li key={artist.artistId}>
+          <Link to={'/artists/' + artist.artistId}>
+            <img className='thumb-md' src={'/public/img/' + artist.artistId + '.png'} />
           </Link>
         </li>
       )
@@ -44,9 +44,9 @@ class Footer extends React.Component {
               <p>© 2015 Rae Farine</p>
             </div>
             <div className='col-sm-7 hidden-xs'>
-              <h3 className='lead'><strong>Leaderboard</strong> Top 5 Recipes</h3>
+              <h3 className='lead'><strong>Leaderboard</strong> Top 5 Artists</h3>
               <ul className='list-inline'>
-                {leaderboardRecipes}
+                {leaderboardArtists}
               </ul>
             </div>
           </div>

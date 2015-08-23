@@ -15,22 +15,69 @@ var _alt = require('../alt');
 
 var _alt2 = _interopRequireDefault(_alt);
 
+var AddArtistActions = (function () {
+  function AddArtistActions() {
+    _classCallCheck(this, AddArtistActions);
+
+    this.generateActions('addArtistSuccess', 'addArtistFail', 'updateName', 'updateBody', 'invalidName', 'invalidBody');
+  }
+
+  _createClass(AddArtistActions, [{
+    key: 'addArtist',
+    value: function addArtist(name, body) {
+      var _this = this;
+
+      $.ajax({
+        type: 'POST',
+        url: '/api/artists',
+        data: { name: name, body: body }
+      }).done(function (data) {
+        _this.actions.addArtistSuccess(data.message);
+      }).fail(function (jqXhr) {
+        _this.actions.addArtistFail(jqXhr.responseJSON.message);
+      });
+    }
+  }]);
+
+  return AddArtistActions;
+})();
+
+exports['default'] = _alt2['default'].createActions(AddArtistActions);
+module.exports = exports['default'];
+
+},{"../alt":4}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _alt = require('../alt');
+
+var _alt2 = _interopRequireDefault(_alt);
+
 var FooterActions = (function () {
   function FooterActions() {
     _classCallCheck(this, FooterActions);
 
-    this.generateActions('getTopRecipesSuccess', 'getTopRecipesFail');
+    this.generateActions('getTopArtistsSuccess', 'getTopArtistsFail');
   }
 
   _createClass(FooterActions, [{
-    key: 'getTopRecipes',
-    value: function getTopRecipes() {
+    key: 'getTopArtists',
+    value: function getTopArtists() {
       var _this = this;
 
-      $.ajax({ url: '/api/recipes/top' }).done(function (data) {
-        _this.actions.getTopRecipesSuccess(data);
+      $.ajax({ url: '/api/artists/top' }).done(function (data) {
+        _this.actions.getTopArtistsSuccess(data);
       }).fail(function (jqXhr) {
-        _this.actions.getTopRecipesFail(jqXhr);
+        _this.actions.getTopArtistsFail(jqXhr);
       });
     }
   }]);
@@ -41,7 +88,7 @@ var FooterActions = (function () {
 exports['default'] = _alt2['default'].createActions(FooterActions);
 module.exports = exports['default'];
 
-},{"../alt":3}],2:[function(require,module,exports){
+},{"../alt":4}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -64,33 +111,33 @@ var NavbarActions = (function () {
   function NavbarActions() {
     _classCallCheck(this, NavbarActions);
 
-    this.generateActions('updateOnlineUsers', 'updateAjaxAnimation', 'updateSearchQuery', 'getRecipeCountSuccess', 'getRecipeCountFail', 'findRecipeSuccess', 'findRecipeFail');
+    this.generateActions('updateOnlineUsers', 'updateAjaxAnimation', 'updateSearchQuery', 'getArtistCountSuccess', 'getArtistCountFail', 'findArtistSuccess', 'findArtistFail');
   }
 
   _createClass(NavbarActions, [{
-    key: 'findRecipe',
-    value: function findRecipe(payload) {
+    key: 'findArtist',
+    value: function findArtist(payload) {
       var _this = this;
 
       $.ajax({
-        url: '/api/recipes/search',
+        url: '/api/artists/search',
         data: { name: payload.searchQuery }
       }).done(function (data) {
         (0, _underscore.assign)(payload, data);
-        _this.actions.findRecipeSuccess(payload);
+        _this.actions.findArtistSuccess(payload);
       }).fail(function () {
-        _this.actions.findRecipeFail(payload);
+        _this.actions.findArtistFail(payload);
       });
     }
   }, {
-    key: 'getRecipeCount',
-    value: function getRecipeCount() {
+    key: 'getArtistCount',
+    value: function getArtistCount() {
       var _this2 = this;
 
-      $.ajax({ url: '/api/recipes/count' }).done(function (data) {
-        _this2.actions.getRecipeCountSuccess(data);
+      $.ajax({ url: '/api/artists/count' }).done(function (data) {
+        _this2.actions.getArtistCountSuccess(data);
       }).fail(function (jqXhr) {
-        _this2.actions.getRecipeCountFail(jqXhr);
+        _this2.actions.getArtistCountFail(jqXhr);
       });
     }
   }]);
@@ -101,7 +148,7 @@ var NavbarActions = (function () {
 exports['default'] = _alt2['default'].createActions(NavbarActions);
 module.exports = exports['default'];
 
-},{"../alt":3,"underscore":"underscore"}],3:[function(require,module,exports){
+},{"../alt":4,"underscore":"underscore"}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -117,7 +164,161 @@ var _alt2 = _interopRequireDefault(_alt);
 exports['default'] = new _alt2['default']();
 module.exports = exports['default'];
 
-},{"alt":"alt"}],4:[function(require,module,exports){
+},{"alt":"alt"}],5:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _storesAddArtistStore = require('../stores/AddArtistStore');
+
+var _storesAddArtistStore2 = _interopRequireDefault(_storesAddArtistStore);
+
+var _actionsAddArtistActions = require('../actions/AddArtistActions');
+
+var _actionsAddArtistActions2 = _interopRequireDefault(_actionsAddArtistActions);
+
+var AddArtist = (function (_React$Component) {
+  _inherits(AddArtist, _React$Component);
+
+  function AddArtist(props) {
+    _classCallCheck(this, AddArtist);
+
+    _get(Object.getPrototypeOf(AddArtist.prototype), 'constructor', this).call(this, props);
+    this.state = _storesAddArtistStore2['default'].getState();
+    this.onChange = this.onChange.bind(this);
+  }
+
+  _createClass(AddArtist, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _storesAddArtistStore2['default'].listen(this.onChange);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      _storesAddArtistStore2['default'].unlisten(this.onChange);
+    }
+  }, {
+    key: 'onChange',
+    value: function onChange(state) {
+      this.setState(state);
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      event.preventDefault();
+
+      var name = this.state.name.trim();
+      var body = this.state.body;
+
+      if (!name) {
+        _actionsAddArtistActions2['default'].invalidName();
+        this.refs.nameTextField.getDOMNode().focus();
+      }
+
+      if (!body) {
+        _actionsAddArtistActions2['default'].invalidBody();
+      }
+
+      if (name && body) {
+        _actionsAddArtistActions2['default'].addArtist(name, body);
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        'div',
+        { className: 'container' },
+        _react2['default'].createElement(
+          'div',
+          { className: 'row flipInX animated' },
+          _react2['default'].createElement(
+            'div',
+            { className: 'col-sm-8' },
+            _react2['default'].createElement(
+              'div',
+              { className: 'panel panel-default' },
+              _react2['default'].createElement(
+                'div',
+                { className: 'panel-heading' },
+                'Add artist'
+              ),
+              _react2['default'].createElement(
+                'div',
+                { className: 'panel-body' },
+                _react2['default'].createElement(
+                  'form',
+                  { onSubmit: this.handleSubmit.bind(this) },
+                  _react2['default'].createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.nameValidationState },
+                    _react2['default'].createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Title'
+                    ),
+                    _react2['default'].createElement('input', { type: 'text', className: 'form-control', ref: 'nameTextField', value: this.state.name,
+                      onChange: _actionsAddArtistActions2['default'].updateName, autoFocus: true }),
+                    _react2['default'].createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.helpBlock
+                    )
+                  ),
+                  _react2['default'].createElement(
+                    'div',
+                    { className: 'form-group ' + this.state.bodyValidationState },
+                    _react2['default'].createElement(
+                      'label',
+                      { className: 'control-label' },
+                      'Artist Description'
+                    ),
+                    _react2['default'].createElement('input', { type: 'text', className: 'form-control', ref: 'bodyTextField', value: this.state.body,
+                      onChange: _actionsAddArtistActions2['default'].updateBody }),
+                    _react2['default'].createElement(
+                      'span',
+                      { className: 'help-block' },
+                      this.state.helpBlock
+                    )
+                  ),
+                  _react2['default'].createElement(
+                    'button',
+                    { type: 'submit', className: 'btn btn-primary' },
+                    'Submit'
+                  )
+                )
+              )
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return AddArtist;
+})(_react2['default'].Component);
+
+exports['default'] = AddArtist;
+module.exports = exports['default'];
+
+},{"../actions/AddArtistActions":1,"../stores/AddArtistStore":12,"react":"react"}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -176,7 +377,7 @@ var App = (function (_React$Component) {
 exports['default'] = App;
 module.exports = exports['default'];
 
-},{"./Footer":5,"./Navbar":7,"react":"react","react-router":"react-router"}],5:[function(require,module,exports){
+},{"./Footer":7,"./Navbar":9,"react":"react","react-router":"react-router"}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -222,7 +423,7 @@ var Footer = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _storesFooterStore2['default'].listen(this.onChange);
-      _actionsFooterActions2['default'].getTopRecipes();
+      _actionsFooterActions2['default'].getTopArtists();
     }
   }, {
     key: 'componentWillUnmount',
@@ -237,14 +438,14 @@ var Footer = (function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var leaderboardRecipes = this.state.recipes.map(function (recipe) {
+      var leaderboardArtists = this.state.artists.map(function (artist) {
         return _react2['default'].createElement(
           'li',
-          { key: recipe.recipeId },
+          { key: artist.artistId },
           _react2['default'].createElement(
             _reactRouter.Link,
-            { to: '/recipes/' + recipe.recipeId },
-            _react2['default'].createElement('img', { className: 'thumb-md', src: '/public/img/' + recipe.recipeId + '.png' })
+            { to: '/artists/' + artist.artistId },
+            _react2['default'].createElement('img', { className: 'thumb-md', src: '/public/img/' + artist.artistId + '.png' })
           )
         );
       });
@@ -297,12 +498,12 @@ var Footer = (function (_React$Component) {
                   null,
                   'Leaderboard'
                 ),
-                ' Top 5 Recipes'
+                ' Top 5 Artists'
               ),
               _react2['default'].createElement(
                 'ul',
                 { className: 'list-inline' },
-                leaderboardRecipes
+                leaderboardArtists
               )
             )
           )
@@ -317,7 +518,7 @@ var Footer = (function (_React$Component) {
 exports['default'] = Footer;
 module.exports = exports['default'];
 
-},{"../actions/FooterActions":1,"../stores/FooterStore":10,"react":"react","react-router":"react-router"}],6:[function(require,module,exports){
+},{"../actions/FooterActions":2,"../stores/FooterStore":13,"react":"react","react-router":"react-router"}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -364,7 +565,7 @@ var Home = (function (_React$Component) {
 exports['default'] = Home;
 module.exports = exports['default'];
 
-},{"react":"react"}],7:[function(require,module,exports){
+},{"react":"react"}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -410,7 +611,7 @@ var Navbar = (function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       _storesNavbarStore2['default'].listen(this.onChange);
-      _actionsNavbarActions2['default'].getRecipeCount();
+      _actionsNavbarActions2['default'].getArtistCount();
 
       var socket = io.connect();
 
@@ -446,7 +647,7 @@ var Navbar = (function (_React$Component) {
       var searchQuery = this.state.searchQuery.trim();
 
       if (searchQuery) {
-        _actionsNavbarActions2['default'].findRecipe({
+        _actionsNavbarActions2['default'].findArtist({
           searchQuery: searchQuery,
           searchForm: this.refs.searchForm.getDOMNode(),
           router: this.context.router
@@ -507,7 +708,7 @@ var Navbar = (function (_React$Component) {
             _react2['default'].createElement(
               'div',
               { className: 'input-group' },
-              _react2['default'].createElement('input', { type: 'text', className: 'form-control', placeholder: this.state.totalRecipes + ' Recipes', value: this.state.searchQuery, onChange: _actionsNavbarActions2['default'].updateSearchQuery }),
+              _react2['default'].createElement('input', { type: 'text', className: 'form-control', placeholder: this.state.totalArtists + ' Artists', value: this.state.searchQuery, onChange: _actionsNavbarActions2['default'].updateSearchQuery }),
               _react2['default'].createElement(
                 'span',
                 { className: 'input-group-btn' },
@@ -678,7 +879,7 @@ Navbar.contextTypes = {
 exports['default'] = Navbar;
 module.exports = exports['default'];
 
-},{"../actions/NavbarActions":2,"../stores/NavbarStore":11,"react":"react","react-router":"react-router"}],8:[function(require,module,exports){
+},{"../actions/NavbarActions":3,"../stores/NavbarStore":14,"react":"react","react-router":"react-router"}],10:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -699,7 +900,7 @@ _reactRouter2['default'].run(_routes2['default'], _reactRouter2['default'].Histo
   _react2['default'].render(_react2['default'].createElement(Handler, null), document.getElementById('app'));
 });
 
-},{"./routes":9,"react":"react","react-router":"react-router"}],9:[function(require,module,exports){
+},{"./routes":11,"react":"react","react-router":"react-router"}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -722,14 +923,96 @@ var _componentsHome = require('./components/Home');
 
 var _componentsHome2 = _interopRequireDefault(_componentsHome);
 
+var _componentsAddArtist = require('./components/AddArtist');
+
+var _componentsAddArtist2 = _interopRequireDefault(_componentsAddArtist);
+
 exports['default'] = _react2['default'].createElement(
   _reactRouter.Route,
   { handler: _componentsApp2['default'] },
-  _react2['default'].createElement(_reactRouter.Route, { path: '/', handler: _componentsHome2['default'] })
+  _react2['default'].createElement(_reactRouter.Route, { path: '/', handler: _componentsHome2['default'] }),
+  _react2['default'].createElement(_reactRouter.Route, { path: '/add', handler: _componentsAddArtist2['default'] })
 );
 module.exports = exports['default'];
 
-},{"./components/App":4,"./components/Home":6,"react":"react","react-router":"react-router"}],10:[function(require,module,exports){
+},{"./components/AddArtist":5,"./components/App":6,"./components/Home":8,"react":"react","react-router":"react-router"}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _alt = require('../alt');
+
+var _alt2 = _interopRequireDefault(_alt);
+
+var _actionsAddArtistActions = require('../actions/AddArtistActions');
+
+var _actionsAddArtistActions2 = _interopRequireDefault(_actionsAddArtistActions);
+
+var AddArtistStore = (function () {
+  function AddArtistStore() {
+    _classCallCheck(this, AddArtistStore);
+
+    this.bindActions(_actionsAddArtistActions2['default']);
+    this.name = '';
+    this.body = '';
+    this.helpBlock = '';
+    this.nameValidationState = '';
+    this.bodyValidationState = '';
+  }
+
+  _createClass(AddArtistStore, [{
+    key: 'onAddArtistSuccess',
+    value: function onAddArtistSuccess(successMessage) {
+      this.nameValidationState = 'has-success';
+      this.helpBlock = successMessage;
+    }
+  }, {
+    key: 'onAddArtistFail',
+    value: function onAddArtistFail(errorMessage) {
+      this.nameValidationState = 'has-error';
+      this.helpBlock = errorMessage;
+    }
+  }, {
+    key: 'onUpdateName',
+    value: function onUpdateName(event) {
+      this.name = event.target.value;
+      this.nameValidationState = '';
+      this.helpBlock = '';
+    }
+  }, {
+    key: 'onUpdateBody',
+    value: function onUpdateBody(event) {
+      this.body = event.target.value;
+      this.bodyValidationState = '';
+    }
+  }, {
+    key: 'onInvalidName',
+    value: function onInvalidName() {
+      this.nameValidationState = 'has-error';
+      this.helpBlock = 'Please enter a artist name.';
+    }
+  }, {
+    key: 'onInvalidBody',
+    value: function onInvalidBody() {
+      this.bodyValidationState = 'has-error';
+    }
+  }]);
+
+  return AddArtistStore;
+})();
+
+exports['default'] = _alt2['default'].createStore(AddArtistStore);
+module.exports = exports['default'];
+
+},{"../actions/AddArtistActions":1,"../alt":4}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -755,17 +1038,17 @@ var FooterStore = (function () {
     _classCallCheck(this, FooterStore);
 
     this.bindActions(_actionsFooterActions2['default']);
-    this.recipes = [];
+    this.artists = [];
   }
 
   _createClass(FooterStore, [{
-    key: 'onGetTopRecipesSuccess',
-    value: function onGetTopRecipesSuccess(data) {
-      this.recipes = data.slice(0, 5);
+    key: 'onGetTopArtistsSuccess',
+    value: function onGetTopArtistsSuccess(data) {
+      this.artists = data.slice(0, 5);
     }
   }, {
-    key: 'onGetTopRecipesFail',
-    value: function onGetTopRecipesFail(jqXhr) {
+    key: 'onGetTopArtistsFail',
+    value: function onGetTopArtistsFail(jqXhr) {
       // Handle multiple response formats, fallback to HTTP status code number.
       toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
     }
@@ -777,7 +1060,7 @@ var FooterStore = (function () {
 exports['default'] = _alt2['default'].createStore(FooterStore);
 module.exports = exports['default'];
 
-},{"../actions/FooterActions":1,"../alt":3}],11:[function(require,module,exports){
+},{"../actions/FooterActions":2,"../alt":4}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -803,20 +1086,20 @@ var NavbarStore = (function () {
     _classCallCheck(this, NavbarStore);
 
     this.bindActions(_actionsNavbarActions2['default']);
-    this.totalRecipes = 0;
+    this.totalArtists = 0;
     this.onlineUsers = 0;
     this.searchQuery = '';
     this.ajaxAnimationClass = '';
   }
 
   _createClass(NavbarStore, [{
-    key: 'onFindRecipeSuccess',
-    value: function onFindRecipeSuccess(payload) {
-      payload.router.transitionTo('/recipes/' + payload.recipeId);
+    key: 'onFindArtistSuccess',
+    value: function onFindArtistSuccess(payload) {
+      payload.router.transitionTo('/artists/' + payload.artistId);
     }
   }, {
-    key: 'onFindRecipeFail',
-    value: function onFindRecipeFail(payload) {
+    key: 'onFindArtistFail',
+    value: function onFindArtistFail(payload) {
       payload.searchForm.classList.add('shake');
       setTimeout(function () {
         payload.searchForm.classList.remove('shake');
@@ -838,13 +1121,13 @@ var NavbarStore = (function () {
       this.searchQuery = event.target.value;
     }
   }, {
-    key: 'onGetRecipeCountSuccess',
-    value: function onGetRecipeCountSuccess(data) {
-      this.totalRecipes = data.count;
+    key: 'onGetArtistCountSuccess',
+    value: function onGetArtistCountSuccess(data) {
+      this.totalArtists = data.count;
     }
   }, {
-    key: 'onGetRecipeCountFail',
-    value: function onGetRecipeCountFail(jqXhr) {
+    key: 'onGetArtistCountFail',
+    value: function onGetArtistCountFail(jqXhr) {
       toastr.error(jqXhr.responseJSON.message);
     }
   }]);
@@ -855,4 +1138,4 @@ var NavbarStore = (function () {
 exports['default'] = _alt2['default'].createStore(NavbarStore);
 module.exports = exports['default'];
 
-},{"../actions/NavbarActions":2,"../alt":3}]},{},[8]);
+},{"../actions/NavbarActions":3,"../alt":4}]},{},[10]);

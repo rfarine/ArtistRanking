@@ -7,34 +7,34 @@ class NavbarActions {
       'updateOnlineUsers',
       'updateAjaxAnimation',
       'updateSearchQuery',
-      'getRecipeCountSuccess',
-      'getRecipeCountFail',
-      'findRecipeSuccess',
-      'findRecipeFail'
+      'getArtistCountSuccess',
+      'getArtistCountFail',
+      'findArtistSuccess',
+      'findArtistFail'
     );
   }
 
-  findRecipe(payload) {
+  findArtist(payload) {
     $.ajax({
-      url: '/api/recipes/search',
+      url: '/api/artists/search',
       data: { name: payload.searchQuery }
     })
       .done((data) => {
         assign(payload, data);
-        this.actions.findRecipeSuccess(payload);
+        this.actions.findArtistSuccess(payload);
       })
       .fail(() => {
-        this.actions.findRecipeFail(payload);
+        this.actions.findArtistFail(payload);
       });
   }
 
-  getRecipeCount() {
-    $.ajax({ url: '/api/recipes/count' })
+  getArtistCount() {
+    $.ajax({ url: '/api/artists/count' })
       .done((data) => {
-        this.actions.getRecipeCountSuccess(data)
+        this.actions.getArtistCountSuccess(data)
       })
       .fail((jqXhr) => {
-        this.actions.getRecipeCountFail(jqXhr)
+        this.actions.getArtistCountFail(jqXhr)
       });
   }
 }

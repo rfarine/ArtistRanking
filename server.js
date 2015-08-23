@@ -1,3 +1,9 @@
+var traverson = require('traverson');
+var async = require('async');
+var request = require('request');
+var xml2js = require('xml2js');
+var mongoose = require('mongoose');
+var config = require('./config');
 var swig  = require('swig');
 var React = require('react');
 var Router = require('react-router');
@@ -6,6 +12,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var Artist = require('./models/artist');
 
 var app = express();
 
@@ -23,9 +30,31 @@ app.use(function(req, res) {
   });
 });
 
-/**
- * Socket.io stuff.
- */
+// Mongoose (db)
+mongoose.connect(config.database);
+mongoose.connection.on('error', function() {
+  console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
+});
+
+// ******* NEXT STEP: GET THE API FOR ARTSY.NET WORKING.
+// Sample API Call
+// var xappToken = 'JvTPWe4WsQO-xqX6Bts49tkPz6Yp2EsehxIRkiGsnYTgt7VGMJVnJO3PgMx37hhywDZRQS0OsFctUz5X0bmN41BA9PTu_NyZ086-707bq7yp3wmfSvWb1FJfy_GZQR5WLVLbyzBiM58207VdPM50k3bVOCkxWiweqM5T77i9S4SFBCpVGGPYqFebS-P3gvAgsZ72gK3KD4ofoXT90M5ottSyaMVs_mCmj_gz-e16aHA=',
+//     api = traverson.json.from('https://api.artsy.net/api');
+
+// api.newRequest()
+//   .follow('artist')
+//   .withRequestOptions({
+//     headers: {
+//       'X-Xapp-Token': xappToken,
+//       'Accept': 'application/vnd.artsy-v2+json'
+//     }
+//   })
+//   .withTemplateParameters({ id: 'andy-warhol' })
+//   .getResource(function(error, andyWarhol) {
+//     console.log(andyWarhol.name + 'was born in ' + andyWarhol.birthday + ' in ' + andyWarhol.hometown);
+//   });
+
+// Socket.io
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var onlineUsers = 0;

@@ -4,17 +4,17 @@ import NavbarActions from '../actions/NavbarActions';
 class NavbarStore {
   constructor() {
     this.bindActions(NavbarActions);
-    this.totalRecipes = 0;
+    this.totalArtists = 0;
     this.onlineUsers = 0;
     this.searchQuery = '';
     this.ajaxAnimationClass = '';
   }
 
-  onFindRecipeSuccess(payload) {
-    payload.router.transitionTo('/recipes/' + payload.recipeId);
+  onFindArtistSuccess(payload) {
+    payload.router.transitionTo('/artists/' + payload.artistId);
   }
 
-  onFindRecipeFail(payload) {
+  onFindArtistFail(payload) {
     payload.searchForm.classList.add('shake');
     setTimeout(() => {
       payload.searchForm.classList.remove('shake');
@@ -33,11 +33,11 @@ class NavbarStore {
     this.searchQuery = event.target.value;
   }
 
-  onGetRecipeCountSuccess(data) {
-    this.totalRecipes = data.count;
+  onGetArtistCountSuccess(data) {
+    this.totalArtists = data.count;
   }
 
-  onGetRecipeCountFail(jqXhr) {
+  onGetArtistCountFail(jqXhr) {
     toastr.error(jqXhr.responseJSON.message);
   }
 }

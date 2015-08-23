@@ -3,18 +3,18 @@ import alt from '../alt';
 class FooterActions {
   constructor() {
     this.generateActions(
-      'getTopRecipesSuccess',
-      'getTopRecipesFail'
+      'getTopArtistsSuccess',
+      'getTopArtistsFail'
     );
   }
 
-  getTopRecipes() {
-    $.ajax({ url: '/api/recipes/top' })
+  getTopArtists() {
+    $.ajax({ url: '/api/artists/top' })
       .done((data) => {
-        this.actions.getTopRecipesSuccess(data)
+        this.actions.getTopArtistsSuccess(data)
       })
       .fail((jqXhr) => {
-        this.actions.getTopRecipesFail(jqXhr)
+        this.actions.getTopArtistsFail(jqXhr)
       });
   }
 }
